@@ -1,0 +1,7 @@
+{
+  "name": "metro-echoes-of-2039",
+  "version": "6.1.0",
+  "description": "Unofficial noncommercial fan-made survival-horror FPS tribute. Original story and assets.",
+  "type": "module",
+  "scripts": { "start": "node server.js" }
+}

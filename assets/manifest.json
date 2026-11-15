@@ -1,0 +1,127 @@
+{
+  "textures": {
+    "cracked_concrete_wall": {
+      "diff": "textures/cracked_concrete_wall/diff.jpg",
+      "nor": "textures/cracked_concrete_wall/nor.jpg",
+      "rough": "textures/cracked_concrete_wall/rough.jpg"
+    },
+    "concrete_floor_worn_001": {
+      "diff": "textures/concrete_floor_worn_001/diff.jpg",
+      "nor": "textures/concrete_floor_worn_001/nor.jpg",
+      "rough": "textures/concrete_floor_worn_001/rough.jpg"
+    },
+    "dirty_tiles": {
+      "diff": "textures/dirty_tiles/diff.jpg",
+      "nor": "textures/dirty_tiles/nor.jpg",
+      "rough": "textures/dirty_tiles/rough.jpg"
+    },
+    "rusty_metal_02": {
+      "diff": "textures/rusty_metal_02/diff.jpg",
+      "nor": "textures/rusty_metal_02/nor.jpg",
+      "rough": "textures/rusty_metal_02/rough.jpg"
+    },
+    "rusty_painted_metal": {
+      "diff": "textures/rusty_painted_metal/diff.jpg",
+      "nor": "textures/rusty_painted_metal/nor.jpg",
+      "rough": "textures/rusty_painted_metal/rough.jpg"
+    },
+    "gravel": {
+      "diff": "textures/gravel/diff.jpg",
+      "nor": "textures/gravel/nor.jpg",
+      "rough": "textures/gravel/rough.jpg"
+    },
+    "weathered_brown_planks": {
+      "diff": "textures/weathered_brown_planks/diff.jpg",
+      "nor": "textures/weathered_brown_planks/nor.jpg",
+      "rough": "textures/weathered_brown_planks/rough.jpg"
+    },
+    "metal_grate_rusty": {
+      "diff": "textures/metal_grate_rusty/diff.jpg",
+      "nor": "textures/metal_grate_rusty/nor.jpg",
+      "rough": "textures/metal_grate_rusty/rough.jpg"
+    },
+    "long_white_tiles": {
+      "diff": "textures/long_white_tiles/diff.jpg",
+      "nor": "textures/long_white_tiles/nor.jpg",
+      "rough": "textures/long_white_tiles/rough.jpg"
+    }
+  },
+  "models": {
+    "metal_jerrycan": {
+      "gltf": "models/metal_jerrycan/metal_jerrycan.gltf",
+      "bytes": 3034558
+    },
+    "old_military_crate": {
+      "gltf": "models/old_military_crate/old_military_crate.gltf",
+      "bytes": 2495423
+    },
+    "barrel_03": {
+      "gltf": "models/barrel_03/barrel_03.gltf",
+      "bytes": 574136
+    },
+    "vintage_radio_transceiver": {
+      "gltf": "models/vintage_radio_transceiver/vintage_radio_transceiver.gltf",
+      "bytes": 6301480
+    },
+    "hanging_industrial_lamp": {
+      "gltf": "models/hanging_industrial_lamp/hanging_industrial_lamp.gltf",
+      "bytes": 3243654
+    },
+    "power_box_01": {
+      "gltf": "models/power_box_01/power_box_01.gltf",
+      "bytes": 2725643
+    },
+    "metal_toolbox": {
+      "gltf": "models/metal_toolbox/metal_toolbox.gltf",
+      "bytes": 2746835
+    },
+    "wooden_crate_01": {
+      "gltf": "models/wooden_crate_01/wooden_crate_01.gltf",
+      "bytes": 2277087
+    },
+    "metal_trash_can": {
+      "gltf": "models/metal_trash_can/metal_trash_can.gltf",
+      "bytes": 4994983
+    },
+    "cement_bag": {
+      "gltf": "models/cement_bag/cement_bag.gltf",
+      "bytes": 1448049
+    },
+    "ammo_box": {
+      "gltf": "models/ammo_box/ammo_box.gltf",
+      "bytes": 1472675
+    },
+    "modular_industrial_pipes_01": {
+      "gltf": "models/modular_industrial_pipes_01/modular_industrial_pipes_01.gltf",
+      "bytes": 4823938
+    }
+  },
+  "characters": {
+    "lev": {
+      "gltf": "characters/lev.glb",
+      "rotationY": 0.8,
+      "surface": "survivor",
+      "boneMap": {
+        "hips": "Skeleton_torso_joint_1",
+        "spine": "Skeleton_torso_joint_2",
+        "chest": "torso_joint_3",
+        "neck": "Skeleton_neck_joint_1",
+        "head": "Skeleton_neck_joint_2",
+        "shoulderL": "Skeleton_arm_joint_L__4_",
+        "elbowL": "Skeleton_arm_joint_L__3_",
+        "wristL": "Skeleton_arm_joint_L__2_",
+        "shoulderR": "Skeleton_arm_joint_R",
+        "elbowR": "Skeleton_arm_joint_R__2_",
+        "wristR": "Skeleton_arm_joint_R__3_",
+        "hipL": "leg_joint_L_1",
+        "kneeL": "leg_joint_L_2",
+        "ankleL": "leg_joint_L_3",
+        "hipR": "leg_joint_R_1",
+        "kneeR": "leg_joint_R_2",
+        "ankleR": "leg_joint_R_3"
+      },
+      "clipMap": { "idle": "Idle", "walk": "Walk", "run": "Run", "death": "Death" }
+    }
+  },
+  "license": "Textures/props: CC0 — Poly Haven (polyhaven.com). Character lev.glb: CC-BY 4.0 — CesiumMan © 2017 Cesium, via Khronos glTF Sample Assets (see assets/ATTRIBUTION.md)."
+}

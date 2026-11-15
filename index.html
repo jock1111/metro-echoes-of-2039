@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>METRO: ECHOES OF 2039 — fan-made</title>
+<link rel="stylesheet" href="css/style.css">
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.module.js" } }
+</script>
+</head>
+<body>
+<canvas id="game-canvas"></canvas>
+
+<!-- permanent screen effects -->
+<div id="vignette"></div>
+<div id="grain"></div>
+<div id="damage-vignette"></div>
+<div id="rad-overlay"></div>
+<div id="fade-overlay"></div>
+
+<!-- gas mask overlay -->
+<div id="mask-overlay" class="hidden">
+  <div class="mask-lens left"></div>
+  <div class="mask-lens right"></div>
+  <div class="mask-bridge"></div>
+  <div class="mask-edge"></div>
+</div>
+
+<!-- HUD -->
+<div id="hud" class="hidden">
+  <div id="crosshair"><span class="ch-dot"></span><span class="ch-line t"></span><span class="ch-line b"></span><span class="ch-line l"></span><span class="ch-line r"></span></div>
+  <div id="hitmarker"></div>
+  <div id="objective-box">
+    <div class="obj-label">OBJECTIVE</div>
+    <div id="objective-text"></div>
+  </div>
+  <div id="objective-toast" class="hidden"></div>
+  <div id="interaction-prompt" class="hidden"><span class="key-cap">E</span><span id="interaction-text"></span></div>
+  <div id="hud-bottom-left">
+    <div id="health-wrap"><div class="hud-icon">✚</div><div id="health-bar"><div id="health-fill"></div></div><div id="health-num">100</div></div>
+    <div id="rad-wrap"><div class="hud-icon">☢</div><div id="rad-bar"><div id="rad-fill"></div></div><div id="geiger-lamp"></div></div>
+  </div>
+  <div id="hud-bottom-right">
+    <div id="weapon-name">KLYK</div>
+    <div id="ammo-wrap"><span id="ammo-mag">8</span><span id="ammo-sep">/</span><span id="ammo-reserve">24</span></div>
+    <div id="fire-mode">SEMI</div>
+  </div>
+  <div id="hud-top-right">
+    <div id="filter-wrap" class="hidden"><span class="tr-icon">◔</span><span id="filter-timer">1:30</span></div>
+    <div id="battery-wrap"><span class="tr-icon">▮</span><div id="battery-bar"><div id="battery-fill"></div></div></div>
+  </div>
+  <div id="subtitle-box" class="hidden"><span id="subtitle-speaker"></span><span id="subtitle-text"></span></div>
+  <div id="pickup-toast" class="hidden"></div>
+  <div id="hint-toast" class="hidden"></div>
+</div>
+
+<!-- dialogue -->
+<div id="dialogue-box" class="hidden">
+  <div id="dialogue-speaker"></div>
+  <div id="dialogue-text"></div>
+  <div id="dialogue-next">[E] continue</div>
+</div>
+
+<!-- note reader -->
+<div id="note-reader" class="hidden">
+  <div id="note-paper">
+    <div id="note-title"></div>
+    <div id="note-body"></div>
+    <div id="note-close">[E] put it down</div>
+  </div>
+</div>
+
+<!-- inventory -->
+<div id="inventory-screen" class="hidden">
+  <div class="inv-panel">
+    <div class="inv-title">FIELD PACK</div>
+    <div id="inv-grid"></div>
+    <div class="inv-help">Click to use · [TAB] close</div>
+  </div>
+</div>
+
+<!-- main menu -->
+<div id="main-menu" class="menu-screen">
+  <div class="menu-bg-art"></div>
+  <div class="menu-content">
+    <div class="title-block">
+      <div class="title-pre">AN UNOFFICIAL FAN-MADE TRIBUTE</div>
+      <h1 class="game-title">METRO</h1>
+      <div class="game-subtitle">ECHOES OF 2039</div>
+    </div>
+    <div class="menu-buttons">
+      <button id="btn-new" class="menu-btn">NEW GAME</button>
+      <button id="btn-continue" class="menu-btn" disabled>CONTINUE</button>
+      <button id="btn-settings" class="menu-btn">SETTINGS</button>
+      <button id="btn-exit" class="menu-btn">EXIT</button>
+    </div>
+    <div class="menu-footer">
+      <div>WASD move · Mouse look · Shift sprint · Ctrl crouch · Space jump</div>
+      <div>E interact · F flashlight · G gas mask · R reload · I inspect · LMB fire · RMB aim · 1/2 weapons · Tab inventory · Esc pause</div>
+      <div class="menu-legal">Noncommercial fan project. Original story &amp; assets. Not affiliated with Dmitry Glukhovsky or 4A Games.</div>
+    </div>
+  </div>
+</div>
+
+<!-- pause menu -->
+<div id="pause-menu" class="menu-screen hidden">
+  <div class="menu-content narrow">
+    <h2 class="pause-title">PAUSED</h2>
+    <div class="menu-buttons">
+      <button id="btn-resume" class="menu-btn">RESUME</button>
+      <button id="btn-save" class="menu-btn">SAVE CHECKPOINT</button>
+      <button id="btn-pause-settings" class="menu-btn">SETTINGS</button>
+      <button id="btn-quit" class="menu-btn">QUIT TO MENU</button>
+    </div>
+    <div class="menu-footer">
+      <div>WASD move · Shift sprint · Ctrl crouch · Space jump</div>
+      <div>E interact · F flashlight · G mask · R reload · LMB fire · RMB aim · 1/2 weapons · Tab pack</div>
+    </div>
+  </div>
+</div>
+
+<!-- settings -->
+<div id="settings-menu" class="menu-screen hidden">
+  <div class="menu-content narrow">
+    <h2 class="pause-title">SETTINGS</h2>
+    <div class="settings-rows">
+      <label class="setting-row"><span>Graphics quality</span>
+        <select id="set-quality"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select>
+      </label>
+      <label class="setting-row"><span>Mouse sensitivity</span>
+        <input type="range" id="set-sensitivity" min="0.2" max="3" step="0.05" value="1"><span class="set-val" id="val-sensitivity">1.00</span>
+      </label>
+      <label class="setting-row"><span>Master volume</span>
+        <input type="range" id="set-volume" min="0" max="1" step="0.05" value="0.8"><span class="set-val" id="val-volume">80%</span>
+      </label>
+      <label class="setting-row"><span>Invert mouse Y</span>
+        <input type="checkbox" id="set-inverty">
+      </label>
+      <label class="setting-row"><span>Head bob</span>
+        <input type="range" id="set-bob" min="0" max="1" step="0.1" value="0.7"><span class="set-val" id="val-bob">70%</span>
+      </label>
+    </div>
+    <div class="menu-buttons"><button id="btn-settings-back" class="menu-btn">BACK</button></div>
+  </div>
+</div>
+
+<!-- loading -->
+<div id="loading-screen" class="menu-screen hidden">
+  <div class="menu-content narrow">
+    <h2 class="pause-title" id="loading-title">DESCENDING</h2>
+    <div id="loading-bar"><div id="loading-fill"></div></div>
+    <div id="loading-tip"></div>
+  </div>
+</div>
+
+<!-- death -->
+<div id="death-screen" class="menu-screen hidden">
+  <div class="menu-content narrow">
+    <h2 class="death-title">YOU DIED</h2>
+    <div id="death-cause"></div>
+    <div class="menu-buttons">
+      <button id="btn-restart" class="menu-btn">RESTART FROM CHECKPOINT</button>
+      <button id="btn-death-menu" class="menu-btn">MAIN MENU</button>
+    </div>
+  </div>
+</div>
+
+<!-- mission complete -->
+<div id="complete-screen" class="menu-screen hidden">
+  <div class="menu-content narrow">
+    <div class="complete-pre">MISSION COMPLETE</div>
+    <h2 class="complete-title">THE LAST SIGNAL</h2>
+    <div id="complete-stats"></div>
+    <div id="complete-tease">The signal has stopped. Something else has started.</div>
+    <div class="menu-buttons"><button id="btn-complete-menu" class="menu-btn">MAIN MENU</button></div>
+  </div>
+</div>
+
+<!-- exit -->
+<div id="exit-screen" class="menu-screen hidden">
+  <div class="menu-content narrow">
+    <h2 class="pause-title">STAY SAFE, STALKER</h2>
+    <div class="exit-note">You can close this tab now.</div>
+    <div class="menu-buttons"><button id="btn-exit-back" class="menu-btn">BACK</button></div>
+  </div>
+</div>
+
+<div id="fatal-error" class="hidden"></div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

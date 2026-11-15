@@ -1,0 +1,17 @@
+# Build outputs and temporary files
+.tmp/
+*.zip
+node_modules/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
