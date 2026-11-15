@@ -102,21 +102,25 @@ report, which re-covers these systems and supersedes the 4.0 notes).
 - **Cinematic lighting** — de-glossed tile/puddle surfaces, fixed the green radio-lamp wash on Lev,
   flickering fire shadows, zone-localized fog, restrained bloom and a single ACES grade. Not brighter overall.
 - **Wayfinding** — maintenance-bay and K-12 signage plus a painted K-12 backdrop anchoring the finale.
-- **End-to-end player-path test** — `tests/e2e-player-path.js` drives New Game → Lev → gate → fuel →
-  generator → security gate → control room → finale → save/reload → death restart using only normal
-  controls (no mission calls, no teleport).
+- **Automated player-path simulation** — `tests/e2e-player-path.js` exercises New Game → Lev → gate →
+  fuel → generator → security gate → control room → finale → save/reload → death restart. This is a
+  simulation, not genuine keyboard/mouse acceptance: it manually advances `debug.frame`, writes
+  mouse/input state, forces pointer-lock state, enables god mode, invokes a direct damage check, and
+  clicks UI elements programmatically. It can catch progression regressions but cannot prove a player
+  can complete the mission through visible, normal input.
 
-### Running the end-to-end test
+### Running the player-path simulation
 
-With the game open at http://localhost:8039, paste into devtools:
+With the game open at `http://localhost:8039`, paste into DevTools:
 
 ```js
 fetch('tests/e2e-player-path.js').then(r => r.text()).then(eval)
   .then(() => MetroE2E.run(window.__game)).then(console.log)
 ```
 
-It runs longer than a single devtools evaluation; await the returned promise. Results are reported
-per stage, not invented.
+This runs longer than a single DevTools evaluation; await the returned promise. For Node-based
+regressions use `npm test`. A genuine visible-browser playthrough must use the displayed controls and
+must not invoke the simulation or debug helpers.
 
 ## Update 3.0 — "Echoes" polish pass
 
